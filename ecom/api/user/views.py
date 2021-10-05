@@ -52,7 +52,7 @@ def signin(request):
             login (request, user)
             return JsonResponse({'token': token, 'user':usr_dict})
         else:
-            return JsonResponse({'erroe':"Invalid Password"})
+            return JsonResponse({'erroe':'Invalid Password'})
 
 
     except UserModel.DoesNotExist:
@@ -61,9 +61,19 @@ def signin(request):
 def signout(request, id):
     logout(request)
 
+    try:
+        user = UserModel.objects.get(pk=id)
+        user.session_token = "0"
+        user.save()
+
+    except UserModel.DoesNotExist:
+        return JsonResponse({'error': 'Invalid user ID'})
+
+    return JsonResponse({'success': 'Logout success'})
+
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {'create' : [AllowAny]}
-    queryset = CustomUser.objects.all().order_by(id)
+    queryset = CustomUser.objects.all().order_by('id')
     serializer_class = UserSerializer
 
     def get_permissions(self):
