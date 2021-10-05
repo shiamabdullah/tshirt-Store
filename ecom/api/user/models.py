@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
     name= models.CharField(max_length=50, default='Anonymous')
     email= models.EmailField(max_length=250, unique=True)
-    userName = None
+    username = None
     
     USERNAME_FIELD= 'email'
     REQUIRED_FIELDS = []
