@@ -29,7 +29,7 @@ export default function Home() {
       <div className="row">
         {products.map((product, index) => {
           return (
-            <div key={index} className="col-3 mb-3">
+            <div key={index} className="col-sm mb-4">
               <Card product={product}></Card>
             </div>
           );
