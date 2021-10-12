@@ -1,6 +1,6 @@
 import React from "react";
 
-const imageHelper = ({ product }) => {
+const ImageHelper = ({ product }) => {
   const imageUrl = product
     ? product.image
     : `https://i.ibb.co/g6hF70Z/Screenshot-1252.png"`;
@@ -16,4 +16,4 @@ const imageHelper = ({ product }) => {
   );
 };
 
-export default imageHelper;
+export default ImageHelper;

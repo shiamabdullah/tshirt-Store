@@ -11,20 +11,17 @@ export default function Home() {
 
   const loadAllProducts = () => {
     getProducts().then((data) => {
-      console.log(data);
-
       if (data.error) {
         setError(data.error);
-        console.log(error);
       } else {
         setProducts(data);
       }
     });
   };
-  console.log(products);
+
   useEffect(() => {
     loadAllProducts();
-  });
+  }, []);
 
   return (
     <Base title="Home" description="Welcome to Tees">
@@ -32,8 +29,8 @@ export default function Home() {
       <div className="row">
         {products.map((product, index) => {
           return (
-            <div key={index} className="col-4 mb-4">
-              <Card></Card>
+            <div key={index} className="col-3 mb-3">
+              <Card product={product}></Card>
             </div>
           );
         })}

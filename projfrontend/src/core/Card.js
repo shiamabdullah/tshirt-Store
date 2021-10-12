@@ -1,21 +1,13 @@
 import React from "react";
-import imageHelper from "./helper/imageHelper";
+import ImageHelper from "./helper/ImageHelper";
 
-function Card() {
+function Card({ product, addtoCart = true, removeFromCard = false }) {
+  console.log(product.image);
   return (
     <div className="card text-white bg-dark border border-info ">
       <div className="card-header lead">Pexels Photo</div>
       <div className="card-body">
-        <div className="rounder border border-success p-2">
-          <img
-            src="https://i.ibb.co/MNVTmgG/123959104-3524033740999554-532484397526415102-n.jpg"
-            alt="123959104-3524033740999554-532484397526415102-n"
-            border="0"
-            style={{ maxHeight: "100%", maxWidth: "100%" }}
-            className="mb-3 rounded"
-            alt=""
-          />
-        </div>
+        <ImageHelper product={product} />
         <p className="lead bg-success font-weight-normal text-wrap">
           Photo is awesome
         </p>
