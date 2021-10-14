@@ -1,9 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router";
 import ImageHelper from "./helper/ImageHelper";
+import { addItemToCart } from "./helper/cartHelper";
+
+const isAuthenticated = true;
 //todo deal with this later
 //authenticated true
-const isAuthenticated = false;
 
 const Card = ({ product, addtoCart = true, removeFromCard = true }) => {
   console.log(product.image);
@@ -12,9 +14,12 @@ const Card = ({ product, addtoCart = true, removeFromCard = true }) => {
   const cardPrice = product ? product.price : "A dummy";
 
   const addToCart = () => {
-    isAuthenticated
-      ? console.log("Added to cart")
-      : console.log("Please login");
+    if (isAuthenticated) {
+      addItemToCart(product, () => {});
+      console.log("Added to cart");
+    } else {
+      console.log("please login");
+    }
   };
 
   const getRedirect = (redirect) => {
