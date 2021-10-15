@@ -58,7 +58,8 @@ const Signup = () => {
             className="alert alert-success"
             style={{ display: success ? "" : "none" }}
           >
-            Your account has been created. Please login now
+            Your account has been created. Please{" "}
+            <Link to="/signin">login</Link>
           </div>
         </div>
       </div>
