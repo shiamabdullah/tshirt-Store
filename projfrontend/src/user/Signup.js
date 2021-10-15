@@ -10,6 +10,7 @@ const Signup = () => {
     password: "",
     phone: "",
     error: "",
+    gender: "",
     success: false,
   });
 
@@ -49,6 +50,35 @@ const Signup = () => {
       .catch((e) => console.log(e));
   };
 
+  const successMessage = () => {
+    return (
+      <div className="row">
+        <div className="col-md-6 offset-sm-3 text-left">
+          <div
+            className="alert alert-success"
+            style={{ display: success ? "" : "none" }}
+          >
+            Your account has been created. Please login now
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const errorMessage = () => {
+    return (
+      <div className="row">
+        <div className="col-md-6 offset-sm-3 text-left">
+          <div
+            className="alert alert-danger"
+            style={{ display: error ? "" : "none" }}
+          >
+            Check all fields again
+          </div>
+        </div>
+      </div>
+    );
+  };
   const validatePassword = () => {};
 
   const signUpForm = () => {
@@ -62,13 +92,14 @@ const Signup = () => {
               type="text"
               value={name}
               onChange={handleChange("name")} //triggered when name changes
+              required
             />
           </div>
           <div className="form-group">
             <label className="text-light"> Email</label>
             <input
               className="form-control"
-              type="text"
+              type="email"
               value={email}
               onChange={handleChange("email")} //triggered when name changes
             />
@@ -94,7 +125,7 @@ const Signup = () => {
             <label className="text-light"> Phone Number</label>
             <input
               className="form-control"
-              type="text"
+              type="number"
               value={phone}
               onChange={handleChange("phone")} //triggered when name changes
             />
@@ -111,7 +142,9 @@ const Signup = () => {
   };
 
   return (
-    <Base title="Sign Up Page" description="Sign up Tshirtee user">
+    <Base title="Sign Up" description="Register With Us">
+      {successMessage()}
+      {errorMessage()}
       {signUpForm()}
       <p className="text-white ">{JSON.stringify(values)}</p>
     </Base>
