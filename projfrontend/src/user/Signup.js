@@ -13,7 +13,8 @@ const Signup = () => {
     success: false,
   });
 
-  const { name, email, password, password2, phone, error, success } = values; //destructure
+  const { name, email, password, password2, phone, gender, error, success } =
+    values; //destructure
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -22,7 +23,7 @@ const Signup = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    signup({ name, email, password, phone })
+    signup({ name, email, password, phone, gender })
       .then((data) => {
         console.log("Data", data);
         if (data.email === email) {
@@ -32,6 +33,7 @@ const Signup = () => {
             email: "",
             password: "",
             phone: "",
+            gender: "",
             error: "",
             success: true,
           });
@@ -46,6 +48,8 @@ const Signup = () => {
       })
       .catch((e) => console.log(e));
   };
+
+  const validatePassword = () => {};
 
   const signUpForm = () => {
     return (
@@ -78,16 +82,14 @@ const Signup = () => {
               onChange={handleChange("password")} //triggered when name changes
             />
           </div>
-
           <div className="form-group">
-            <label className="text-light"> Confirm Password</label>
-            <input
-              className="form-control"
-              type="password"
-              value={password2}
-              onChange={handleChange("password2")} //triggered when name changes
-            />
+            <label className="text-light"> Gender</label>
+            <select class="form-select" onChange={handleChange("gender")}>
+              <option value="Male">♂ Male</option>
+              <option value="Female">♀ Female</option>
+            </select>
           </div>
+
           <div className="form-group">
             <label className="text-light"> Phone Number</label>
             <input
