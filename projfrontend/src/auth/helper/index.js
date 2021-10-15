@@ -21,13 +21,24 @@ export const signin = (user) => {
   const formData = new FormData();
 
   for (const name in user) {
+    console.log(user[name]);
     formData.append(name, user[name]);
   }
+  //this two works the same
+  // const { email, password } = user;
+  // const formData = new FormData();
+  // formData.append("email", email);
+  // formData.append("password", password);
+  for (var key of formData.keys()) {
+    console.log("MY KEY", key);
+  }
+
   return fetch(`${API}user/login/`, {
     method: "POST",
-    body: FormData,
+    body: formData,
   })
     .then((response) => {
+      console.log("SUCCESS:", response);
       return response.json();
     })
     .catch((err) => console.log(err));
@@ -46,6 +57,7 @@ export const isAuthenticated = () => {
   }
   if (localStorage.getItem("jwt")) {
     return JSON.parse(localStorage.getItem("jwt"));
+    //compare JWT with database json token
   } else {
     return false;
   }

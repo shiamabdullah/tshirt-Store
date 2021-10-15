@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Base from "../core/Base";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { signin, authenticate, isAuthenticated } from "../auth/helper";
 
 const Signin = () => {
   const [values, setValues] = useState({
     name: "",
-    email: "",
-    password: "",
+    email: "ten@tees.com",
+    password: "test",
     error: false,
     success: false,
     loading: false,
@@ -19,6 +20,49 @@ const Signin = () => {
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
   };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setValues({ ...values, error: false, loading: true });
+    const user = { email, password };
+    signin(user)
+      .then((data) => {
+        console.log("Data", data);
+        if (data.token) {
+          let sessionToken = data.token;
+          authenticate(sessionToken, () => {
+            console.log("Token Added");
+            setValues({
+              ...values,
+              didRedirect: true,
+            });
+          });
+        } else {
+          setValues({
+            ...values,
+            loading: false,
+          });
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const performRedirect = () => {
+    if (isAuthenticated()) {
+      return <Redirect to="/" />;
+    }
+  };
+
+  const loadingMessage = () => {
+    return (
+      loading && (
+        <div className="alert alert-info">
+          <h2>Loading ...</h2>
+        </div>
+      )
+    );
+  };
+
   const successMessage = () => {
     return (
       <div className="row">
@@ -28,7 +72,7 @@ const Signin = () => {
             style={{ display: success ? "" : "none" }}
           >
             Your account has been created. Please{" "}
-            <Link to="/signin">login</Link>
+            <Link to="/signin">Login</Link>
           </div>
         </div>
       </div>
@@ -75,7 +119,9 @@ const Signin = () => {
           </div>
 
           <div className=" d-grid gap-2 col-md-4 mt-3 mx-auto">
-            <button className="btn btn-success">Login</button>
+            <button className="btn btn-success" onClick={onSubmit}>
+              Login
+            </button>
           </div>
         </form>
       </div>
@@ -84,8 +130,10 @@ const Signin = () => {
 
   return (
     <Base title="Welcome, to the login page" description="Login Here">
+      {loadingMessage()}
       {signInForm()}
       <p className="text-center">{JSON.stringify(values)}</p>
+      {performRedirect()}
     </Base>
   );
 };
