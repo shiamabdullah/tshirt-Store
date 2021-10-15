@@ -2,12 +2,11 @@ import { API } from "../../backend";
 import { cartEmpty } from "../../core/helper/cartHelper";
 
 export const signup = (user) => {
-  return (fetch(`${API}user/`),
-  {
+  return fetch(`${API}user/`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-type": "application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(user),
   })
