@@ -12,10 +12,19 @@ const Signin = () => {
     success: false,
     loading: false,
     didRedirect: false,
+    tokenErrorMsg: "",
   });
 
-  const { name, email, password, error, success, loading, didRedirect } =
-    values; //destructure
+  const {
+    name,
+    email,
+    password,
+    error,
+    success,
+    loading,
+    didRedirect,
+    tokenErrorMsg,
+  } = values; //destructure
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -27,7 +36,7 @@ const Signin = () => {
     const user = { email, password };
     signin(user)
       .then((data) => {
-        console.log("Data", data);
+        console.log("Token Data", data);
         if (data.token) {
           let sessionToken = data.token;
           authenticate(sessionToken, () => {
@@ -41,6 +50,8 @@ const Signin = () => {
           setValues({
             ...values,
             loading: false,
+            error: true,
+            tokenErrorMsg: data.error,
           });
         }
       })
@@ -62,6 +73,8 @@ const Signin = () => {
       )
     );
   };
+
+  const sessionExistCheck = () => {};
 
   const successMessage = () => {
     return (
@@ -87,7 +100,7 @@ const Signin = () => {
             className="alert alert-danger"
             style={{ display: error ? "" : "none" }}
           >
-            Check all fields again
+            {tokenErrorMsg}
           </div>
         </div>
       </div>
@@ -131,6 +144,7 @@ const Signin = () => {
   return (
     <Base title="Welcome, to the login page" description="Login Here">
       {loadingMessage()}
+      {errorMessage()}
       {signInForm()}
       <p className="text-center">{JSON.stringify(values)}</p>
       {performRedirect()}
