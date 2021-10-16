@@ -36,11 +36,12 @@ const Signin = () => {
     const user = { email, password };
     signin(user)
       .then((data) => {
-        console.log("Token Data", data);
+        // console.log("Token Data", data);
         if (data.token) {
-          let sessionToken = data.token;
-          authenticate(sessionToken, () => {
-            console.log("Token Added");
+          // let sessionToken = data.token;
+          //we are sending the whole data as we can't just logout with the token
+          authenticate(data, () => {
+            // console.log("Token Added");
             setValues({
               ...values,
               didRedirect: true,

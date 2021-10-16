@@ -1,6 +1,5 @@
 import { API } from "../../backend";
 import { cartEmpty } from "../../core/helper/cartHelper";
-
 export const signup = (user) => {
   return fetch(`${API}user/`, {
     method: "POST",
@@ -64,14 +63,13 @@ export const isAuthenticated = () => {
 };
 
 export const signout = (next) => {
-  const userId = isAuthenticated() && isAuthenticated.user.id;
+  const userId = isAuthenticated() && isAuthenticated().user.id;
   if (typeof window !== undefined) {
     localStorage.removeItem("jwt");
     cartEmpty(() => {}); //todo ex
     next();
 
-    return (fetch(`${API}user/logout/${userId}`),
-    {
+    return fetch(`${API}user/logout/${userId}`, {
       method: "GET",
     })
       .then((response) => {
