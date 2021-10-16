@@ -1,5 +1,5 @@
 //sign in sign up
-import React from "react";
+import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth/helper";
 
@@ -22,56 +22,65 @@ const Menu = ({ history, path }) => {
             HOME
           </Link>
         </li>
-        <li className="nav-item">
-          <Link
-            className="nav-link"
-            style={currentTab(history, "/user/dashboard")}
-            to="/user/dashboard"
-          >
-            Dashbaord
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            className="nav-link"
-            style={currentTab(history, "/cart")}
-            to="/cart"
-          >
-            Cart
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            className="nav-link"
-            style={currentTab(history, "/signin")}
-            to="/signin"
-          >
-            Login
-          </Link>
-        </li>
+        {isAuthenticated() && (
+          <Fragment>
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                style={currentTab(history, "/user/dashboard")}
+                to="/user/dashboard"
+              >
+                Dashbaord
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                style={currentTab(history, "/cart")}
+                to="/cart"
+              >
+                Cart
+              </Link>
+            </li>
 
-        <li className="nav-item">
-          <Link
-            className="nav-link"
-            style={currentTab(history, "/signup")}
-            to="/signup"
-          >
-            Register
-          </Link>
-        </li>
+            <li className="nav-item">
+              <span
+                onClick={() => {
+                  signout(() => {
+                    history.push();
+                  });
+                }}
+                className="nav-link text-warning"
+              >
+                Logout
+              </span>
+            </li>
+          </Fragment>
+        )}
 
-        <li className="nav-item">
-          <span
-            onClick={() => {
-              signout(() => {
-                history.push();
-              });
-            }}
-            className="nav-link text-warning"
-          >
-            Logout
-          </span>
-        </li>
+        {!isAuthenticated() && (
+          <Fragment>
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                style={currentTab(history, "/signin")}
+                to="/signin"
+              >
+                Login
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                style={currentTab(history, "/signup")}
+                to="/signup"
+              >
+                Register
+              </Link>
+            </li>
+          </Fragment>
+        )}
       </ul>
     </div>
   );
