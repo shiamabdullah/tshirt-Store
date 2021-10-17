@@ -1,24 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router";
 import ImageHelper from "./helper/ImageHelper";
 import { addItemToCart, removeItemFromCart } from "./helper/cartHelper";
+import { isAuthenticated } from "../auth/helper";
 
-const isAuthenticated = true;
 //todo deal with this later
 //authenticated true
 
 const Card = ({ product, addtoCart = true, removeFromCard = true }) => {
-  console.log(product.image);
+  // console.log(product.image);
   const cardTitle = product ? product.name : "A dummy";
   const cardDescription = product ? product.description : "Dummy";
   const cardPrice = product ? product.price : "A dummy";
 
+  const [redirect, setRedirect] = useState(false);
+
   const addToCart = () => {
-    if (isAuthenticated) {
-      addItemToCart(product, () => {});
+    if (isAuthenticated()) {
+      addItemToCart(product, () => {
+        setRedirect(true);
+      });
       console.log("Added to cart");
     } else {
-      console.log("please login");
+      console.log("Login Please");
     }
   };
 
@@ -62,12 +66,14 @@ const Card = ({ product, addtoCart = true, removeFromCard = true }) => {
     <div className="card text-white bg-dark border border-info ">
       <div className="card-header lead">{cardTitle}</div>
       <div className="card-body">
+        {getRedirect(redirect)}
         <ImageHelper product={product} />
         <p className="lead bg-success font-weight-normal text-wrap">
           {cardDescription}
         </p>
 
         <p className="btn btn-success rounded btn-sm px-4">{cardPrice}</p>
+
         <div className="row">
           <div className="col-12">{showAddToCart(addToCart)}</div>
           <div className="col-12">{showRemoveFromCart(removeFromCard)}</div>
