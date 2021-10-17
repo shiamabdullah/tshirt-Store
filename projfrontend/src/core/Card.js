@@ -7,7 +7,14 @@ import { isAuthenticated } from "../auth/helper";
 //todo deal with this later
 //authenticated true
 
-const Card = ({ product, addtoCart = true, removeFromCard = true }) => {
+const Card = ({
+  product,
+  addtoCart = true,
+  removeFromCard = true,
+  reload = undefined,
+  setReload = (f) => f,
+  //function(f){return f}
+}) => {
   // console.log(product.image);
   const cardTitle = product ? product.name : "A dummy";
   const cardDescription = product ? product.description : "Dummy";
@@ -52,6 +59,7 @@ const Card = ({ product, addtoCart = true, removeFromCard = true }) => {
           onClick={() => {
             //todo
             removeItemFromCart(product.id);
+            setReload(!reload);
             console.log("product removed from cart");
           }}
           className="btn btn-block btn-outline-danger mt-2 mb-2"

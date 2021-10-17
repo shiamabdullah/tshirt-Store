@@ -5,11 +5,12 @@ import { loadCart } from "./helper/cartHelper";
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
+  const [reload, setReload] = useState([false]);
 
   useEffect(() => {
     setProducts(loadCart());
     //here the loadCart will fetch all the products from local storage
-  }, []);
+  }, [reload]);
   const loadAllProducts = (products) => {
     return (
       <div>
@@ -19,6 +20,8 @@ const Cart = () => {
             product={product}
             removeFromCard={true}
             addtoCart={false}
+            reload={reload}
+            setReload={setReload}
           />
         ))}
       </div>
