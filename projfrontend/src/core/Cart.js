@@ -1,9 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Base from "./Base";
+import Card from "./Card";
+import { loadCart } from "./helper/cartHelper";
+
 const Cart = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    setProducts(loadCart());
+    //here the loadCart will fetch all the products from local storage
+  }, []);
+  const loadAllProducts = (products) => {
+    return (
+      <div>
+        {products.map((product, index) => (
+          <Card
+            key={index}
+            product={product}
+            removeFromCard={true}
+            addtoCart={false}
+          />
+        ))}
+      </div>
+    );
+  };
+  const loadCheckout = () => {
+    return (
+      <div>
+        <h1>Checkout</h1>
+      </div>
+    );
+  };
+
   return (
     <div>
-      <Base title="Cart" description="Cart Page"></Base>
+      <Base title="Cart" description="Welcome to Checkout">
+        <div className="row text-center">
+          <div className="col-6">{loadAllProducts(products)}</div>
+          <div className="col-6">{loadCheckout()}</div>
+        </div>
+      </Base>
     </div>
   );
 };
