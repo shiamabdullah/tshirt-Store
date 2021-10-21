@@ -81,7 +81,7 @@ const Card = ({
         </p>
 
         <p className="btn btn-success rounded btn-sm px-4">{cardPrice}</p>
-        <div classname="row">
+        <div className="row">
           <div className="d-grid gap-2 mx-auto">
             {showAddToCart(addToCart)}
             {showRemoveFromCart(removeFromCard)}
