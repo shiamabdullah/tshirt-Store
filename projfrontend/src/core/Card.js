@@ -10,7 +10,7 @@ import { isAuthenticated } from "../auth/helper";
 const Card = ({
   product,
   addtoCart = true,
-  removeFromCard = true,
+  removeFromCard = false,
   reload = undefined,
   setReload = (f) => f,
   //function(f){return f}
@@ -41,10 +41,10 @@ const Card = ({
 
   const showAddToCart = (addToCart) => {
     return (
-      addToCart && (
+      addtoCart && (
         <button
           onClick={addToCart}
-          className="btn btn-block btn-outline-success mt-2 mb-2"
+          className="btn btn-block btn-outline-success"
         >
           Add to cart
         </button>
@@ -62,7 +62,7 @@ const Card = ({
             setReload(!reload);
             console.log("product removed from cart");
           }}
-          className="btn btn-block btn-outline-danger mt-2 mb-2"
+          className="btn btn-block btn-outline-danger"
         >
           Remove From Cart
         </button>
@@ -81,10 +81,11 @@ const Card = ({
         </p>
 
         <p className="btn btn-success rounded btn-sm px-4">{cardPrice}</p>
-
-        <div className="row">
-          <div className="col-12">{showAddToCart(addToCart)}</div>
-          <div className="col-12">{showRemoveFromCart(removeFromCard)}</div>
+        <div classname="row">
+          <div className="d-grid gap-2 mx-auto">
+            {showAddToCart(addToCart)}
+            {showRemoveFromCart(removeFromCard)}
+          </div>
         </div>
       </div>
     </div>
