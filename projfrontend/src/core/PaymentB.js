@@ -55,9 +55,8 @@ const PaymentB = ({ products, reload = undefined, setReload = (f) => f }) => {
             <DropIn
               options={{ authorization: info.clientToken }}
               onInstance={(instance) => (this.instance = instance)}
-            >
-              <button className="btn btn-block btn-success">Buyee</button>
-            </DropIn>
+            ></DropIn>
+            <button className="btn btn-block btn-success">Buyee</button>
           </div>
         ) : (
           <h3> Please Login or add something in cart </h3>
