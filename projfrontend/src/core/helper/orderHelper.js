@@ -4,7 +4,6 @@ export const createOrder = (userId, token, orderData) => {
   const formData = new FormData();
 
   for (const name in orderData) {
-    console.log(orderData[name]);
     formData.append(name, orderData[name]);
   }
 
